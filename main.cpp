@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "json.h"
 
-void populate_sources(const char *filter, std::vector<std::vector<char>> &sources)
+void populate_sources(const char *filter, std::vector<std::vector<char> > &sources)
 {
 	char filename[256];
 	for (int i = 1; i < 64; ++i)
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 {
 	// Fail
 	printf("===FAIL===\n\n");
-	std::vector<std::vector<char>> sources;
+	std::vector<std::vector<char> > sources;
 	populate_sources("test/fail%d.json", sources);
 	int passed = 0;
 	for (size_t i = 0; i < sources.size(); ++i)

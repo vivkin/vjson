@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "block_allocator.h"
 
-block_allocator::block_allocator(size_t blocksize): m_blocksize(blocksize), m_head(0)
+block_allocator::block_allocator(size_t blocksize): m_head(0), m_blocksize(blocksize)
 {
 }
 

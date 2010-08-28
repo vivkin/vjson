@@ -172,7 +172,7 @@ void json_append(json_value *lhs, json_value *rhs)
 
 #define ERROR(it, desc)\
 	*error_pos = it;\
-	*error_desc = desc;\
+	*error_desc = (char *)desc;\
 	*error_line = 1 - escaped_newlines;\
 	for (char *c = it; c != source; --c)\
 		if (*c == '\n') ++*error_line;\
