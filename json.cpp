@@ -310,18 +310,18 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 
 								if (codepoint <= 0x7F)
 								{
-									*last = codepoint;
+									*last = (char)codepoint;
 								}
 								else if (codepoint <= 0x7FF)
 								{
-									*last++ = 0xC0 | (codepoint >> 6);
-									*last = 0x80 | (codepoint & 0x3F);
+									*last++ = (char)(0xC0 | (codepoint >> 6));
+									*last = (char)(0x80 | (codepoint & 0x3F));
 								}
 								else if (codepoint <= 0xFFFF)
 								{
-									*last++ = 0xE0 | (codepoint >> 12);
-									*last++ = 0x80 | ((codepoint >> 6) & 0x3F);
-									*last = 0x80 | (codepoint & 0x3F);
+									*last++ = (char)(0xE0 | (codepoint >> 12));
+									*last++ = (char)(0x80 | ((codepoint >> 6) & 0x3F));
+									*last = (char)(0x80 | (codepoint & 0x3F));
 								}
 							}
 							it += 4;
