@@ -137,10 +137,12 @@ char *atof(char *first, char *last, float *out)
 
 		if (exponent_negative)
 		{
-			power_of_ten = float(1) / power_of_ten;
+			result /= power_of_ten;
 		}
-
-		result *= power_of_ten;
+		else
+		{
+			result *= power_of_ten;
+		}
 	}
 
 	*out = result;
