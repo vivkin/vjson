@@ -56,7 +56,7 @@ void print(json_value *value, int ident = 0)
 		printf("%d\n", value->int_value);
 		break;
 	case JSON_FLOAT:
-		printf("%2.20f\n", value->float_value);
+		printf("%f\n", value->float_value);
 		break;
 	case JSON_BOOL:
 		printf(value->int_value ? "true\n" : "false\n");
