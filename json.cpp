@@ -177,7 +177,7 @@ void json_append(json_value *lhs, json_value *rhs)
 		if (*c == '\n') ++*error_line;\
 	return 0
 
-#define CHECK_TOP() if (!top) {ERROR(it, "Unexcepted character");}
+#define CHECK_TOP() if (!top) {ERROR(it, "Unexpected character");}
 
 json_value *json_parse(char *source, char **error_pos, char **error_desc, int *error_line, block_allocator *allocator)
 {
@@ -245,7 +245,7 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 		case ':':
 			if (!top || top->type != JSON_OBJECT)
 			{
-				ERROR(it, "Unexcepted character");
+				ERROR(it, "Unexpected character");
 			}
 			++it;
 			break;
@@ -453,7 +453,7 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 			break;
 
 		default:
-			ERROR(it, "Unexcepted character");
+			ERROR(it, "Unexpected character");
 		}
 
 		// skip white space
