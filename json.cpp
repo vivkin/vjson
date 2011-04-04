@@ -87,21 +87,20 @@ char *atof(char *first, char *last, float *out)
 	}
 
 	// fraction part
-	float frac = 0;
 	if (first != last && *first == '.')
 	{
 		++first;
 
-		float inv_base = 1;
+		float inv_base = 0.1f;
 		for (; first != last && IS_DIGIT(*first); ++first)
 		{
-			inv_base *= float(0.1);
-			frac += (*first - '0') * inv_base;
+			result += (*first - '0') * inv_base;
+			inv_base *= 0.1f;
 		}
 	}
 
 	// result w\o exponent
-	result = (result + frac) * sign;
+	result *= sign;
 
 	// exponent
 	bool exponent_negative = false;
