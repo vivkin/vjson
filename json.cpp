@@ -376,20 +376,20 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 				object->name = name;
 				name = 0;
 
-				// true
+				// null
 				if (it[0] == 'n' && it[1] == 'u' && it[2] == 'l' && it[3] == 'l')
 				{
 					object->type = JSON_NULL;
 					it += 4;
 				}
-				// false
+				// true
 				else if (it[0] == 't' && it[1] == 'r' && it[2] == 'u' && it[3] == 'e')
 				{
 					object->type = JSON_BOOL;
 					object->int_value = 1;
 					it += 4;
 				}
-				// null
+				// false
 				else if (it[0] == 'f' && it[1] == 'a' && it[2] == 'l' && it[3] == 's' && it[4] == 'e')
 				{
 					object->type = JSON_BOOL;
