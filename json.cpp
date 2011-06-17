@@ -265,7 +265,7 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 				char *last = it;
 				while (*it)
 				{
-					if (*it < '\x20')
+					if ((unsigned char)*it < '\x20')
 					{
 						ERROR(first, "Control characters not allowed in strings");
 					}
