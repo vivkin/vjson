@@ -1,4 +1,4 @@
-#include <memory.h>
+#include <string.h>
 #include "json.h"
 
 // true if character represent a digit
@@ -190,8 +190,16 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 
 	while (*it)
 	{
+		// skip white space
+		while (*it == '\x20' || *it == '\x9' || *it == '\xD' || *it == '\xA')
+		{
+			++it;
+		}
+
 		switch (*it)
 		{
+		case '\0':
+			break;
 		case '{':
 		case '[':
 			{
@@ -453,12 +461,6 @@ json_value *json_parse(char *source, char **error_pos, char **error_desc, int *e
 
 		default:
 			ERROR(it, "Unexpected character");
-		}
-
-		// skip white space
-		while (*it == '\x20' || *it == '\x9' || *it == '\xD' || *it == '\xA')
-		{
-			++it;
 		}
 	}
 
