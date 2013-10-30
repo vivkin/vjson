@@ -5,7 +5,7 @@
 #define IS_DIGIT(c) (c >= '0' && c <= '9')
 
 // convert string to integer
-char *atoi(char *first, char *last, int *out)
+static char *atoi(char *first, char *last, int *out)
 {
 	int sign = 1;
 	if (first != last)
@@ -32,7 +32,7 @@ char *atoi(char *first, char *last, int *out)
 }
 
 // convert hexadecimal string to unsigned integer
-char *hatoui(char *first, char *last, unsigned int *out)
+static char *hatoui(char *first, char *last, unsigned int *out)
 {
 	unsigned int result = 0;
 	for (; first != last; ++first)
@@ -62,7 +62,7 @@ char *hatoui(char *first, char *last, unsigned int *out)
 }
 
 // convert string to floating point
-char *atof(char *first, char *last, float *out)
+static char *atof(char *first, char *last, float *out)
 {
 	// sign
 	float sign = 1;
@@ -148,14 +148,14 @@ char *atof(char *first, char *last, float *out)
 	return first;
 }
 
-json_value *json_alloc(block_allocator *allocator)
+static inline json_value *json_alloc(block_allocator *allocator)
 {
 	json_value *value = (json_value *)allocator->malloc(sizeof(json_value));
 	memset(value, 0, sizeof(json_value));
 	return value;
 }
 
-void json_append(json_value *lhs, json_value *rhs)
+static inline void json_append(json_value *lhs, json_value *rhs)
 {
 	rhs->parent = lhs;
 	if (lhs->last_child)
