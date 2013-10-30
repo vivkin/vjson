@@ -25,7 +25,7 @@ void populate_sources(const char *filter, std::vector<std::vector<char> > &sourc
 		}
 	}
 
-	printf("Loaded %d json files\n", sources.size());
+	printf("Loaded %zd json files\n", sources.size());
 }
 
 #define IDENT(n) for (int i = 0; i < n; ++i) printf("    ")
@@ -82,7 +82,7 @@ bool parse(char *source)
 	return false;
 }
 
-int main(int argc, char **argv)
+int main()
 {
 	// Fail
 	printf("===FAIL===\n\n");
@@ -91,13 +91,13 @@ int main(int argc, char **argv)
 	int passed = 0;
 	for (size_t i = 0; i < sources.size(); ++i)
 	{
-		printf("Parsing %d\n", i + 1);
+		printf("Parsing %zd\n", i + 1);
 		if (parse(&sources[i][0]))
 		{
 			++passed;
 		}
 	}
-	printf("Passed %d from %d tests\n", passed, sources.size());
+	printf("Passed %d from %zd tests\n", passed, sources.size());
 
 	// Pass
 	sources.clear();
@@ -106,13 +106,13 @@ int main(int argc, char **argv)
 	passed = 0;
 	for (size_t i = 0; i < sources.size(); ++i)
 	{
-		printf("Parsing %d\n", i + 1);
+		printf("Parsing %zd\n", i + 1);
 		if (parse(&sources[i][0]))
 		{
 			++passed;
 		}
 	}
-	printf("Passed %d from %d tests\n", passed, sources.size());
+	printf("Passed %d from %zd tests\n", passed, sources.size());
 
 	return 0;
 }
