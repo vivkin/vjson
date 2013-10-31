@@ -1,5 +1,6 @@
-#include <vector>
+#include <stdlib.h>
 #include <stdio.h>
+#include <vector>
 #include "json.h"
 
 void populate_sources(const char *filter, std::vector<std::vector<char> > &sources)
@@ -12,10 +13,13 @@ void populate_sources(const char *filter, std::vector<std::vector<char> > &sourc
 		if (fp)
 		{
 			fseek(fp, 0, SEEK_END);
-			int size = ftell(fp);
+			size_t size = (size_t)ftell(fp);
 			fseek(fp, 0, SEEK_SET);
 			std::vector<char> buffer(size + 1);
-			fread (&buffer[0], 1, size, fp);
+			if (fread(&buffer[0], 1, size, fp) != size)
+			{
+				exit(EXIT_FAILURE);
+			}
 			fclose(fp);
 			sources.push_back(buffer);
 		}
@@ -28,11 +32,11 @@ void populate_sources(const char *filter, std::vector<std::vector<char> > &sourc
 	printf("Loaded %zd json files\n", sources.size());
 }
 
-#define IDENT(n) for (int i = 0; i < n; ++i) printf("    ")
+#define INDENT(n) for (int i = 0; i < n; ++i) printf("    ")
 
-void print(json_value *value, int ident = 0)
+void print(json_value *value, int indent = 0)
 {
-	IDENT(ident);
+	INDENT(indent);
 	if (value->name) printf("\"%s\" = ", value->name);
 	switch(value->type)
 	{
@@ -44,9 +48,9 @@ void print(json_value *value, int ident = 0)
 		printf(value->type == JSON_OBJECT ? "{\n" : "[\n");
 		for (json_value *it = value->first_child; it; it = it->next_sibling)
 		{
-			print(it, ident + 1);
+			print(it, indent + 1);
 		}
-		IDENT(ident);
+		INDENT(indent);
 		printf(value->type == JSON_OBJECT ? "}\n" : "]\n");
 		break;
 	case JSON_STRING:
@@ -61,13 +65,15 @@ void print(json_value *value, int ident = 0)
 	case JSON_BOOL:
 		printf(value->int_value ? "true\n" : "false\n");
 		break;
+	default:
+		exit(EXIT_FAILURE);
 	}
 }
 
 bool parse(char *source)
 {
 	char *errorPos = 0;
-	char *errorDesc = 0;
+	const char *errorDesc = 0;
 	int errorLine = 0;
 	block_allocator allocator(1 << 10);
 	

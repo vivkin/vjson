@@ -83,7 +83,7 @@ static char *atof(char *first, char *last, float *out)
 	float result = 0;
 	for (; first != last && IS_DIGIT(*first); ++first)
 	{
-		result = 10 * result + (*first - '0');
+		result = 10 * result + (float)(*first - '0');
 	}
 
 	// fraction part
@@ -94,7 +94,7 @@ static char *atof(char *first, char *last, float *out)
 		float inv_base = 0.1f;
 		for (; first != last && IS_DIGIT(*first); ++first)
 		{
-			result += (*first - '0') * inv_base;
+			result += (float)(*first - '0') * inv_base;
 			inv_base *= 0.1f;
 		}
 	}
@@ -170,7 +170,7 @@ static inline void json_append(json_value *lhs, json_value *rhs)
 
 #define ERROR(it, desc)\
 	*error_pos = it;\
-	*error_desc = (char *)desc;\
+	*error_desc = desc;\
 	*error_line = 1 - escaped_newlines;\
 	for (char *c = it; c != source; --c)\
 		if (*c == '\n') ++*error_line;\
@@ -178,7 +178,7 @@ static inline void json_append(json_value *lhs, json_value *rhs)
 
 #define CHECK_TOP() if (!top) {ERROR(it, "Unexpected character");}
 
-json_value *json_parse(char *source, char **error_pos, char **error_desc, int *error_line, block_allocator *allocator)
+json_value *json_parse(char *source, char **error_pos, const char **error_desc, int *error_line, block_allocator *allocator)
 {
 	json_value *root = 0;
 	json_value *top = 0;
