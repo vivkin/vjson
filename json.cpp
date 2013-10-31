@@ -54,7 +54,7 @@ static char *hatoui(char *first, char *last, unsigned int *out)
 		{
 			break;
 		}
-		result = 16 * result + digit;
+		result = 16 * result + (unsigned int)digit;
 	}
 	*out = result;
 

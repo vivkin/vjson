@@ -65,8 +65,6 @@ void print(json_value *value, int indent = 0)
 	case JSON_BOOL:
 		printf(value->int_value ? "true\n" : "false\n");
 		break;
-	default:
-		exit(EXIT_FAILURE);
 	}
 }
 
